@@ -23,19 +23,28 @@ namespace UserAdmin.Views
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            var email = EmailBox.Text.Trim();
+            var password = PasswordBoxInput.Password;
+
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            {
+                ShowError("Érvénytelen email vagy jelszó!");
+            }
 
         }
 
         private void RegisterLink_Click(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new RegisterPage());
+        }
 
+        private void ShowError(string message)
+        {
+            ErrorText.Text = message;
+            ErrorText.Visibility = Visibility.Visible;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace UserAdmin.Views
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new LoginPage());
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)

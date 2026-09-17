@@ -93,7 +93,7 @@ namespace UserAdmin.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/UserAdmin;V1.0.0.0;component/views/registerpage.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/UserAdmin;component/views/registerpage.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Views\RegisterPage.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

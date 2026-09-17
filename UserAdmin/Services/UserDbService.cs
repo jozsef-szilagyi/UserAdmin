@@ -27,5 +27,34 @@ namespace UserAdmin.Services
 
             connection.Close();
         }
+
+        public User FindByEmail(string email)
+        {
+            var connection = new MySqlConnection(ConnectionString);
+            connection.Open();
+
+            string sql = @"SELECT `username`, `Email`, `password`, `registeredAt` FROM `users` WHERE email=@email";
+            var cmd = new MySqlCommand(sql,connection);
+
+            cmd.Parameters.AddWithValue("@email", email);
+
+            var reader = cmd.ExecuteReader();
+
+            if (reader.Read())
+            {
+                var user = new User()
+                {
+                    Username = reader.GetString(0),
+                    Email = reader.GetString(1),
+                    Password = reader.GetString(2),
+                    RegisteredAt = reader.GetDateTime(3)
+                };
+                connection.Close();
+                return user;
+            }
+
+            connection.Close();
+            return null;
+        }
     }
 }
