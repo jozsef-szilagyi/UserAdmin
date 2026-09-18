@@ -28,7 +28,7 @@ namespace UserAdmin.Services
             connection.Close();
         }
 
-        public User FindByEmail(string email)
+        public User? FindByEmail(string email)
         {
             var connection = new MySqlConnection(ConnectionString);
             connection.Open();
@@ -52,9 +52,11 @@ namespace UserAdmin.Services
                 connection.Close();
                 return user;
             }
-
-            connection.Close();
-            return null;
+            else
+            {
+                connection.Close();
+                return null;
+            }
         }
     }
 }
