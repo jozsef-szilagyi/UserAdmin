@@ -58,5 +58,33 @@ namespace UserAdmin.Services
                 return null;
             }
         }
+
+        public List<User> GetAll()
+        {
+            var users = new List<User>();
+            var connection = new MySqlConnection(ConnectionString);
+            connection.Open();
+
+            string sql = @"SELECT `username`, `Email`, `password`, `registeredAt` FROM `users` ORDER BY registeredAt";
+            var cmd = new MySqlCommand(sql, connection);
+            var reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var user = new User()
+                {
+                    Username = reader.GetString(0),
+                    Email = reader.GetString(1),
+                    Password = reader.GetString(2),
+                    RegisteredAt = reader.GetDateTime(3)
+                };
+
+                users.Add(user);
+            }
+
+            connection.Close();
+
+            return users;
+        }
     }
 }

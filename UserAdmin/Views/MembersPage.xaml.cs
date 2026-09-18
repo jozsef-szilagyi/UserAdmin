@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UserAdmin.Services;
 
 namespace UserAdmin.Views
 {
@@ -18,9 +19,11 @@ namespace UserAdmin.Views
     /// </summary>
     public partial class MembersPage : Page
     {
+        private readonly UserDbService _userDbService = new();
         public MembersPage()
         {
             InitializeComponent();
+            MembersGrid.ItemsSource = _userDbService.GetAll();
         }
 
         private void ContactMenuItem_Click(object sender, RoutedEventArgs e)
