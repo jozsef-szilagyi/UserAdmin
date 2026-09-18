@@ -32,3 +32,5 @@ C:\Users\jozse\Desktop\Programok\WPF\UserAdmin\UserAdmin\obj\Debug\net10.0-windo
 C:\Users\jozse\Desktop\Programok\WPF\UserAdmin\UserAdmin\obj\Debug\net10.0-windows\Views\LoginPage.baml
 C:\Users\jozse\Desktop\Programok\WPF\UserAdmin\UserAdmin\obj\Debug\net10.0-windows\Views\MembersPage.g.cs
 C:\Users\jozse\Desktop\Programok\WPF\UserAdmin\UserAdmin\obj\Debug\net10.0-windows\Views\MembersPage.baml
+C:\Users\jozse\Desktop\Programok\WPF\UserAdmin\UserAdmin\obj\Debug\net10.0-windows\Views\MemberEditPage.g.cs
+C:\Users\jozse\Desktop\Programok\WPF\UserAdmin\UserAdmin\obj\Debug\net10.0-windows\Views\MemberEditPage.baml

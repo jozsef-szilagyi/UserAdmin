@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UserAdmin.Models;
 using UserAdmin.Services;
 
 namespace UserAdmin.Views
@@ -44,10 +45,19 @@ namespace UserAdmin.Views
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
            NavigationService.Navigate(new MemberEditPage(_userDbService, null));
+            
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            var member = MembersGrid.SelectedItem as User;
+
+            var user = new User
+            {
+                Username = member.Username,
+                Email = member.Email,
+                Password = member.Password
+            };
 
         }
 
