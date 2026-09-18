@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UserAdmin.Models;
+using UserAdmin.Services;
 
 namespace UserAdmin.Views
 {
@@ -18,19 +20,88 @@ namespace UserAdmin.Views
     /// </summary>
     public partial class MemberEditPage : Page
     {
-        public MemberEditPage()
+        private readonly UserDbService _userDbService;
+        private readonly User? _originalUser;
+        public MemberEditPage(UserDbService userdbservice, User? existingUser)
         {
             InitializeComponent();
+
+            _userDbService = userdbservice;
+            _originalUser = existingUser;
+
+            if (existingUser is not null)
+            {
+                HeaderText.Text = "Tag szerkesztése";
+                UsernameBox.Text = existingUser.Username;
+                EmailBox.Text = existingUser.Email;
+                Passwordtext.Text = existingUser.Password;
+            }
+            else
+            {
+                HeaderText.Text = "Új tag felvétele";
+                Passwordtext.Text = "Jelszó";
+            }
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.GoBack();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
+            var username = UsernameBox.Text.Trim();
+            var email = EmailBox.Text.Trim();
+            var password = PasswordBoxInput.Password;
 
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email))
+            {
+                ErrorText.Text = "Felhasználónév és kötelező!";
+                ErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+
+            if (username.Contains(',') || email.Contains(","))
+            {
+                ErrorText.Text = "Felhasználónév és email nem tartalmazhat vesszőt!";
+                ErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+
+            var existingWithEmail = _userDbService.FindByEmail(email);
+            var isExistingEmail = existingWithEmail is not null && (_originalUser is null || !string.Equals(existingWithEmail.Email, _originalUser.Email, StringComparison.OrdinalIgnoreCase));
+
+            if (isExistingEmail == true)
+            {
+                ErrorText.Text = "Ez az emailcím már foglalt!";
+                ErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+
+            if (_originalUser is null && string.IsNullOrWhiteSpace(password))
+            {
+                ErrorText.Text = "Új tagnál a jelszó megadása kötelező!";
+                ErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(password) && password.Length <6)
+            {
+                ErrorText.Text = "A jelszónak legalább 6 karakter hosszúnak kell lennie!";
+                ErrorText.Visibility = Visibility.Visible;
+                return;
+            }
+
+            var result = new User
+            {
+                Username = username,
+                Email = email,
+                Password = password,
+                RegisteredAt = DateTime.Now,
+            };
+
+            _userDbService.Add(result);
+            MessageBox.Show("Sikeres mentés.", "Mentés", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

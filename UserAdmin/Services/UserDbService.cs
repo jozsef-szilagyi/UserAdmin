@@ -6,7 +6,7 @@ using UserAdmin.Models;
 
 namespace UserAdmin.Services
 {
-    internal class UserDbService
+    public class UserDbService
     {
         public string ConnectionString = "Server=localhost;Database=useradmin;User=root;Password=;";
         public void Add(User user)

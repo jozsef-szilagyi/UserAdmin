@@ -43,7 +43,7 @@ namespace UserAdmin.Views
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-           
+           NavigationService.Navigate(new MemberEditPage(_userDbService, null));
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
